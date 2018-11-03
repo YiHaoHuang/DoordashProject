@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="@dimen/quad_spacing">
+
+    <ImageView
+        android:id="@+id/restaurant_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/quad_spacing"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/restaurant_description"
+        app:layout_constraintHorizontal_weight="4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/restaurant_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/single_spacing"
+        android:gravity="start"
+        android:textAppearance="@style/Title"
+        app:layout_constraintBottom_toTopOf="@+id/restaurant_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/restaurant_description"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Tsing Tao : it's a long name for test" />
+
+    <TextView
+        android:id="@+id/restaurant_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/font_size_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/restaurant_status"
+        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintStart_toEndOf="@+id/restaurant_image"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_name"
+        tools:text="Chinese Soup : it's a long description for test" />
+
+    <TextView
+        android:id="@+id/restaurant_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/double_spacing"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/font_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@+id/restaurant_description"
+        app:layout_constraintTop_toTopOf="@+id/restaurant_description"
+        tools:text="1000 min: it's a long status for test" />
+
+</android.support.constraint.ConstraintLayout>
