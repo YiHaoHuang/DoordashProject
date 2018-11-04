@@ -1,4 +1,4 @@
-package com.demo.ike.doordashproject
+package com.demo.ike.doordashproject.data
 
 import com.google.gson.annotations.SerializedName
 
@@ -44,7 +44,8 @@ class RestaurantDetail {
     val coverImgUrl: String? = null
 
     @SerializedName("address")
-    var address: Address = Address()
+    var address: Address =
+        Address()
 
     fun getPrintableAddress(): String{
         return address.printableAddress

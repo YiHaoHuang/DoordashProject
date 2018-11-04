@@ -1,5 +1,7 @@
-package com.demo.ike.doordashproject
+package com.demo.ike.doordashproject.retrofit
 
+import com.demo.ike.doordashproject.data.Restaurant
+import com.demo.ike.doordashproject.data.RestaurantDetail
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path

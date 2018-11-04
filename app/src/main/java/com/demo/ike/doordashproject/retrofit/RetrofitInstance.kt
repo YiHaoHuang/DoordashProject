@@ -1,4 +1,4 @@
-package com.demo.ike.doordashproject
+package com.demo.ike.doordashproject.retrofit
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.Retrofit

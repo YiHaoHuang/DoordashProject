@@ -5,7 +5,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.demo.ike.doordashproject.RetrofitInstance.retrofit
+import com.demo.ike.doordashproject.data.RestaurantDetail
+import com.demo.ike.doordashproject.retrofit.RestaurantListService
+import com.demo.ike.doordashproject.retrofit.RetrofitInstance.retrofit
 import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

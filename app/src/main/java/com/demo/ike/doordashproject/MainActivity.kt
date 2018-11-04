@@ -3,6 +3,7 @@ package com.demo.ike.doordashproject
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.demo.ike.doordashproject.retrofit.RetrofitInstance
 
 class MainActivity : AppCompatActivity() {
     private lateinit var presenter: MainActivityPresenter

@@ -1,6 +1,8 @@
 package com.demo.ike.doordashproject
 
 import androidx.navigation.findNavController
+import com.demo.ike.doordashproject.data.Restaurant
+import com.demo.ike.doordashproject.retrofit.RestaurantListService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

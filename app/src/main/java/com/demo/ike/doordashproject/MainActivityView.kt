@@ -10,6 +10,7 @@ import android.view.View
 import android.view.View.VISIBLE
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
+import com.demo.ike.doordashproject.data.Restaurant
 import com.demo.ike.doordashproject.util.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_main.*
