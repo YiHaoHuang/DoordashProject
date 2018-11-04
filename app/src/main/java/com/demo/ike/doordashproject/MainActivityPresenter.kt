@@ -11,30 +11,48 @@ private const val DOORDASH_LNG = -122.139956
 
 class MainActivityPresenter(private val retrofit: Retrofit) :
     LifecycleHandler<MainActivityViewHolder> {
+    private var isViewInitialized = false
     private var viewHolder: MainActivityViewHolder? = null
     private var disposable: Disposable? = null
     private var listItems: List<Restaurant> = Collections.emptyList()
 
     override fun onViewAttached(view: MainActivityViewHolder) {
         this.viewHolder = view
+        isViewInitialized = false
+    }
+
+    private fun fetchData() {
         disposable = retrofit.create(RestaurantListService::class.java)
             .getRestaurants(DOORDASH_LAT, DOORDASH_LNG).subscribeOn(
                 Schedulers.io()
             ).observeOn(AndroidSchedulers.mainThread()).subscribe({ result ->
                                                                       listItems = result
                                                                       viewHolder?.updateList(
-                                                                          listItems
+                                                                          listItems = listItems,
+                                                                          onPullToRefresh = ::fetchData
                                                                       )
                                                                   }, { error ->
-                                                                      viewHolder?.showError(error.message)
+                                                                      viewHolder?.showError(
+                                                                          message = error.message,
+                                                                          onUserPressedRetry = ::fetchData
+                                                                      )
                                                                   })
     }
 
     override fun onResume() {
-
+        if (!isViewInitialized) {
+            isViewInitialized = true
+            fetchData()
+        }
     }
 
     override fun onPause() {
+        disposable?.let {
+            if (!it.isDisposed) {
+                it.dispose()
+                isViewInitialized = false
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -44,11 +62,3 @@ class MainActivityPresenter(private val retrofit: Retrofit) :
     override fun onDestroy() {
     }
 }
-
-
-
-
-
-
-
-

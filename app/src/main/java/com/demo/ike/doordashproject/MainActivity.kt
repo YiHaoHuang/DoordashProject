@@ -10,7 +10,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.presenter = MainActivityPresenter(RetrofitInstance.retrofit)
-        presenter.onViewAttached(MainActivityViewHolder(window.decorView.findViewById(android.R.id.content)))
+        presenter.onViewAttached(
+            MainActivityViewHolder(
+                this,
+                window.decorView.findViewById(android.R.id.content)
+            )
+        )
     }
 
     override fun onResume() {
