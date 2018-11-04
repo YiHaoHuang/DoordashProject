@@ -2,4 +2,11 @@
     <string name="app_name">DoordashProject</string>
     <string name="discover">Discover</string>
     <string name="retry">Retry</string>
+    <string name="address">Address :</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="free">Free</string>
+    <string name="offer_delivery_or_not">Offer Delivery or Not :</string>
+    <string name="delivery_fee">Delivery Fee :</string>
+    <string name="average_rating">Rating Avg. :</string>
 </resources>

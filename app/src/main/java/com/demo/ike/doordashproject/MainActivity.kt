@@ -2,6 +2,7 @@ package com.demo.ike.doordashproject
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import androidx.navigation.findNavController
 
 class MainActivity : AppCompatActivity() {
     private lateinit var presenter: MainActivityPresenter
@@ -9,11 +10,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        this.presenter = MainActivityPresenter(RetrofitInstance.retrofit)
+        this.presenter = MainActivityPresenter(this, RetrofitInstance.retrofit)
         presenter.onViewAttached(
             MainActivityView(
                 this,
-                window.decorView.findViewById(android.R.id.content)
+                window.decorView.findViewById(android.R.id.content),
+                findNavController(R.id.nav_host_fragment)
             )
         )
     }
@@ -21,6 +23,12 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         presenter.onResume()
+    }
+
+    override fun onBackPressed() {
+        if (!presenter.onBackPressed()) {
+            super.onBackPressed()
+        }
     }
 
     override fun onPause() {

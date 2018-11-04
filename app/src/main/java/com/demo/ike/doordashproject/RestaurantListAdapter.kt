@@ -10,9 +10,14 @@ import kotlinx.android.synthetic.main.restaurant_item_view.view.*
 class RestaurantListAdapter : RecyclerView.Adapter<RestaurantListAdapter.ViewHolder>() {
 
     private var items: List<Restaurant> = emptyList()
+    private lateinit var onRestaurantClick: (String, String) -> Unit
 
-    fun update(list: List<Restaurant>) {
+    fun update(
+        list: List<Restaurant>,
+        onRestaurantClick: (String, String) -> Unit = { s: String, s1: String -> }
+    ) {
         items = list
+        this.onRestaurantClick = onRestaurantClick
         notifyDataSetChanged()
     }
 
@@ -26,11 +31,11 @@ class RestaurantListAdapter : RecyclerView.Adapter<RestaurantListAdapter.ViewHol
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(items[position])
+        viewHolder.bind(items[position], onRestaurantClick)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(data: Restaurant) {
+        fun bind(data: Restaurant, onRestaurantClick: (String, String) -> Unit) {
             with(data) {
                 Picasso.get()
                     .load(coverImgUrl)
@@ -38,6 +43,7 @@ class RestaurantListAdapter : RecyclerView.Adapter<RestaurantListAdapter.ViewHol
                 itemView.restaurant_name.text = name
                 itemView.restaurant_description.text = description
                 itemView.restaurant_status.text = status
+                itemView.setOnClickListener { onRestaurantClick(id.toString(), name) }
             }
         }
     }

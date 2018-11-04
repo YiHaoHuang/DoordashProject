@@ -9,6 +9,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 /**
  * reference: https://github.com/codepath/android_guides/wiki/Endless-Scrolling-with-AdapterViews-and-RecyclerView
  * The goal is to implement the EndlessScroll functionality
+ * I used this as the reference
+ * Actually we can do it by ourselves
+ * => when we scroll close to the bottom, we call the onLoadMore callback to fetch the data again
  */
 abstract class EndlessScrollListener(private val layoutManager: LinearLayoutManager) :
     RecyclerView.OnScrollListener() {

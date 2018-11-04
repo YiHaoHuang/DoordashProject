@@ -1,17 +1,26 @@
 package com.demo.ike.doordashproject
 
 import android.support.design.widget.Snackbar
+import android.support.transition.TransitionManager
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.view.View.VISIBLE
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph
+import com.demo.ike.doordashproject.util.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 
-class MainActivityView(private val activity: MainActivity, override val containerView: View) :
+class MainActivityView(
+    private val activity: MainActivity,
+    override val containerView: View,
+    private val navController: NavController
+) :
     LayoutContainer {
 
     private val adapter = RestaurantListAdapter()
@@ -36,8 +45,8 @@ class MainActivityView(private val activity: MainActivity, override val containe
         activity.setSupportActionBar(toolbar)
     }
 
-    fun updateList(listItems: List<Restaurant>) {
-        adapter.update(listItems)
+    fun updateList(listItems: List<Restaurant>, onRestaurantClick: (String, String) -> Unit) {
+        adapter.update(listItems, onRestaurantClick)
         swl_refresh.isRefreshing = false
     }
 
@@ -64,9 +73,25 @@ class MainActivityView(private val activity: MainActivity, override val containe
         swl_refresh.setOnRefreshListener { onPullToRefresh() }
     }
 
-    fun resetScrollListener() {
+    fun resetAdapter() {
         if (::scrollListener.isInitialized) {
             scrollListener.resetState()
         }
+        rv_list.recycledViewPool.clear()
+        adapter.update(emptyList())
     }
+
+    fun launchFullScreenFlow(navigationGraph: NavGraph) {
+        TransitionManager.beginDelayedTransition(nav_host_fragment_container)
+        navController.graph = navigationGraph
+        nav_host_fragment_container.visible = true
+    }
+
+    fun closeFullScreenFlow() {
+        TransitionManager.beginDelayedTransition(nav_host_fragment_container)
+        nav_host_fragment_container.visible = false
+        navController.popBackStack()
+    }
+
+    fun isShowingFullScreenFlow() = nav_host_fragment_container.visibility == VISIBLE
 }
