@@ -9,6 +9,6 @@ interface RestaurantListService {
     @GET("/v2/restaurant/")
     fun getRestaurants(
         @Query("lat") lat: Double, @Query("lng") lng: Double, @Query("offset")
-        offset: Int = 0, @Query("limit") limit: Int = 50
+        offset: Int, @Query("limit") limit: Int
     ): Observable<List<Restaurant>>
 }

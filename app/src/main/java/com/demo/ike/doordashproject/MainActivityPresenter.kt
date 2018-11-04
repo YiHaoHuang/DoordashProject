@@ -4,59 +4,67 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
-import java.util.*
+
 
 private const val DOORDASH_LAT = 37.422740
 private const val DOORDASH_LNG = -122.139956
+private const val PAGE_SIZE = 50
+private const val MAX_SIZE = 200
 
 class MainActivityPresenter(private val retrofit: Retrofit) :
-    LifecycleHandler<MainActivityViewHolder> {
-    private var isViewInitialized = false
-    private var viewHolder: MainActivityViewHolder? = null
+    LifecycleHandler<MainActivityView> {
+    private var view: MainActivityView? = null
     private var disposable: Disposable? = null
-    private var listItems: List<Restaurant> = Collections.emptyList()
+    private var listItems: MutableList<Restaurant> = ArrayList()
 
-    override fun onViewAttached(view: MainActivityViewHolder) {
-        this.viewHolder = view
-        isViewInitialized = false
+    override fun onViewAttached(view: MainActivityView) {
+        this.view = view
+        this.view?.updatePullToRefreshAndLoadMoreListener(::fetchData, ::onPullToRefresh)
+        fetchData()
     }
 
     private fun fetchData() {
+        // stop to fetch new data if the item list reach the maximum
+        if (listItems.size >= MAX_SIZE) {
+            return
+        }
         disposable = retrofit.create(RestaurantListService::class.java)
-            .getRestaurants(DOORDASH_LAT, DOORDASH_LNG).subscribeOn(
+            .getRestaurants(DOORDASH_LAT, DOORDASH_LNG, listItems.size, PAGE_SIZE)
+            .subscribeOn(
                 Schedulers.io()
             ).observeOn(AndroidSchedulers.mainThread()).subscribe({ result ->
-                                                                      listItems = result
-                                                                      viewHolder?.updateList(
-                                                                          listItems = listItems,
-                                                                          onPullToRefresh = ::fetchData
+                                                                      listItems.addAll(result)
+                                                                      view?.updateList(
+                                                                          listItems = listItems
                                                                       )
                                                                   }, { error ->
-                                                                      viewHolder?.showError(
+                                                                      view?.showError(
                                                                           message = error.message,
                                                                           onUserPressedRetry = ::fetchData
                                                                       )
                                                                   })
     }
 
+    // clear the data and fetch the data again when Pull to refresh
+    private fun onPullToRefresh() {
+        listItems.clear()
+        view?.resetScrollListener()
+        fetchData()
+    }
+
     override fun onResume() {
-        if (!isViewInitialized) {
-            isViewInitialized = true
-            fetchData()
-        }
     }
 
     override fun onPause() {
         disposable?.let {
             if (!it.isDisposed) {
                 it.dispose()
-                isViewInitialized = false
             }
         }
     }
 
     override fun onDestroyView() {
-        viewHolder = null
+        view = null
     }
 
     override fun onDestroy() {

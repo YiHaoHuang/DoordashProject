@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         this.presenter = MainActivityPresenter(RetrofitInstance.retrofit)
         presenter.onViewAttached(
-            MainActivityViewHolder(
+            MainActivityView(
                 this,
                 window.decorView.findViewById(android.R.id.content)
             )
