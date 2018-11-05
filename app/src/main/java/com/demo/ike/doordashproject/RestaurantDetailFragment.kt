@@ -1,7 +1,9 @@
 package com.demo.ike.doordashproject
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.restaurant_detail_layout.view.*
+
 
 private const val RESTAURANT_ID = "id"
 private const val RESTAURANT_NAME = "name"
@@ -72,9 +75,20 @@ class RestaurantDetailFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.restaurant_detail_layout, null, false).also { view ->
-            view.toolbar.title = restaurantName
-            view.toolbar.setTitleTextColor(resources.getColor(R.color.white))
+            setupToolbar(view.toolbar)
         }
+    }
+
+    private fun setupToolbar(toolbar: Toolbar) {
+        toolbar.title = restaurantName
+        toolbar.setTitleTextColor(resources.getColor(R.color.white))
+        val backButton = resources.getDrawable(R.drawable.ic_back_button)
+        backButton.setColorFilter(
+            resources.getColor(R.color.white),
+            PorterDuff.Mode.SRC_ATOP
+        )
+        toolbar.navigationIcon = backButton
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
     }
 
     override fun onResume() {
