@@ -85,6 +85,7 @@ class MainActivityView(
     fun launchFullScreenFlow(navigationGraph: NavGraph) {
         TransitionManager.beginDelayedTransition(nav_host_fragment_container)
         navController.graph = navigationGraph
+        // use kotlin extension function to set the view visibility
         nav_host_fragment_container.visible = true
     }
 

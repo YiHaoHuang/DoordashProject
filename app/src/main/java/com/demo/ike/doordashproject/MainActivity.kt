@@ -3,6 +3,7 @@ package com.demo.ike.doordashproject
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.demo.ike.doordashproject.retrofit.RestaurantListService
 import com.demo.ike.doordashproject.retrofit.RetrofitInstance
 
 class MainActivity : AppCompatActivity() {
@@ -11,7 +12,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        this.presenter = MainActivityPresenter(this, RetrofitInstance.retrofit)
+        this.presenter = MainActivityPresenter(
+            RetrofitInstance.retrofit.create(
+                RestaurantListService::class.java
+            ), findNavController(R.id.nav_host_fragment)
+                .navInflater
+        )
         presenter.onViewAttached(
             MainActivityView(
                 this,
