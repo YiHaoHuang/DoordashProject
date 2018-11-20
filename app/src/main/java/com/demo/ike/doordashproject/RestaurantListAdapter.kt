@@ -1,14 +1,17 @@
 package com.demo.ike.doordashproject
 
+import android.content.SharedPreferences
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import com.demo.ike.doordashproject.data.Restaurant
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.restaurant_item_view.view.*
 
-class RestaurantListAdapter : RecyclerView.Adapter<RestaurantListAdapter.ViewHolder>() {
+class RestaurantListAdapter(val preferences: SharedPreferences) :
+    RecyclerView.Adapter<RestaurantListAdapter.ViewHolder>() {
 
     private var items: List<Restaurant> = emptyList()
     private lateinit var onRestaurantClick: (String, String) -> Unit
@@ -32,11 +35,15 @@ class RestaurantListAdapter : RecyclerView.Adapter<RestaurantListAdapter.ViewHol
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(items[position], onRestaurantClick)
+        viewHolder.bind(items[position], onRestaurantClick, preferences)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(data: Restaurant, onRestaurantClick: (String, String) -> Unit) {
+        fun bind(
+            data: Restaurant,
+            onRestaurantClick: (String, String) -> Unit,
+            preferences: SharedPreferences
+        ) {
             with(data) {
                 Picasso.get()
                     .load(coverImgUrl)
@@ -45,6 +52,23 @@ class RestaurantListAdapter : RecyclerView.Adapter<RestaurantListAdapter.ViewHol
                 itemView.restaurant_description.text = description
                 itemView.restaurant_status.text = status
                 itemView.setOnClickListener { onRestaurantClick(id.toString(), name) }
+                itemView.checkbox.setOnCheckedChangeListener(null)
+                var set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
+                itemView.checkbox.isChecked = set.contains(id.toString())
+                itemView.checkbox.setOnCheckedChangeListener(object :
+                                                                 CompoundButton.OnCheckedChangeListener {
+                    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                        if (isChecked) {
+                            var set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
+                            set.add(data.id.toString())
+                            preferences.edit().putStringSet("fav", set).apply()
+                        } else {
+                            var set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
+                            set.remove(data.id.toString())
+                            preferences.edit().putStringSet("fav", set).apply()
+                        }
+                    }
+                })
             }
         }
     }

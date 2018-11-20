@@ -61,4 +61,10 @@
         app:layout_constraintTop_toTopOf="@+id/restaurant_description"
         tools:text="1000 min: it's a long status for test" />
 
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add to the fav list" />
+
 </android.support.constraint.ConstraintLayout>

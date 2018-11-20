@@ -1,5 +1,6 @@
 package com.demo.ike.doordashproject
 
+import android.content.Context
 import android.support.design.widget.Snackbar
 import android.support.transition.TransitionManager
 import android.support.v7.widget.DividerItemDecoration
@@ -24,7 +25,7 @@ class MainActivityView(
 ) :
     LayoutContainer {
 
-    private val adapter = RestaurantListAdapter()
+    private val adapter = RestaurantListAdapter(activity.getPreferences(Context.MODE_PRIVATE))
     private val layoutManager = LinearLayoutManager(containerView.context)
     private lateinit var scrollListener: EndlessScrollListener
 

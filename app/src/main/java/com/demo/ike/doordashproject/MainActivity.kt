@@ -1,5 +1,6 @@
 package com.demo.ike.doordashproject
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.presenter = MainActivityPresenter(
+            this.getPreferences(Context.MODE_PRIVATE),
             RetrofitInstance.retrofit.create(
                 RestaurantListService::class.java
             ), findNavController(R.id.nav_host_fragment)

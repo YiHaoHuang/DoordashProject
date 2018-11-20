@@ -1,5 +1,6 @@
 package com.demo.ike.doordashproject
 
+import android.content.SharedPreferences
 import androidx.navigation.NavInflater
 import com.demo.ike.doordashproject.data.Restaurant
 import com.demo.ike.doordashproject.retrofit.RestaurantListService
@@ -14,6 +15,7 @@ private const val PAGE_SIZE = 50
 private const val MAX_SIZE = 200
 
 class MainActivityPresenter(
+    private val sharedPref: SharedPreferences,
     private val restaurantListService: RestaurantListService,
     private val navInflater: NavInflater
 ) : LifecycleHandler<MainActivityView> {
