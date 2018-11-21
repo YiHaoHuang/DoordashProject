@@ -7,13 +7,21 @@
     android:background="?android:attr/selectableItemBackground"
     android:padding="@dimen/quad_spacing">
 
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="favorite"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_image" />
+
     <ImageView
         android:id="@+id/restaurant_image"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/quad_spacing"
+        android:layout_marginBottom="@dimen/single_spacing"
         android:adjustViewBounds="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/checkbox"
         app:layout_constraintEnd_toStartOf="@+id/restaurant_description"
         app:layout_constraintHorizontal_weight="4"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,11 +68,5 @@
         app:layout_constraintStart_toEndOf="@+id/restaurant_description"
         app:layout_constraintTop_toTopOf="@+id/restaurant_description"
         tools:text="1000 min: it's a long status for test" />
-
-    <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add to the fav list" />
 
 </android.support.constraint.ConstraintLayout>

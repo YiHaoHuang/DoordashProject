@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import com.demo.ike.doordashproject.data.Restaurant
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.restaurant_item_view.view.*
@@ -53,22 +52,19 @@ class RestaurantListAdapter(val preferences: SharedPreferences) :
                 itemView.restaurant_status.text = status
                 itemView.setOnClickListener { onRestaurantClick(id.toString(), name) }
                 itemView.checkbox.setOnCheckedChangeListener(null)
-                var set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
+                val set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
                 itemView.checkbox.isChecked = set.contains(id.toString())
-                itemView.checkbox.setOnCheckedChangeListener(object :
-                                                                 CompoundButton.OnCheckedChangeListener {
-                    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                        if (isChecked) {
-                            var set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
-                            set.add(data.id.toString())
-                            preferences.edit().putStringSet("fav", set).apply()
-                        } else {
-                            var set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
-                            set.remove(data.id.toString())
-                            preferences.edit().putStringSet("fav", set).apply()
-                        }
+                itemView.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        val set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
+                        set.add(data.id.toString())
+                        preferences.edit().putStringSet("fav", set).apply()
+                    } else {
+                        val set = HashSet<String>(preferences.getStringSet("fav", emptySet()))
+                        set.remove(data.id.toString())
+                        preferences.edit().putStringSet("fav", set).apply()
                     }
-                })
+                }
             }
         }
     }
