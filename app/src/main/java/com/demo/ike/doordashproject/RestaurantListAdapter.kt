@@ -9,7 +9,7 @@ import com.demo.ike.doordashproject.data.Restaurant
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.restaurant_item_view.view.*
 
-class RestaurantListAdapter(val preferences: SharedPreferences) :
+class RestaurantListAdapter(private val preferences: SharedPreferences) :
     RecyclerView.Adapter<RestaurantListAdapter.ViewHolder>() {
 
     private var items: List<Restaurant> = emptyList()
@@ -24,7 +24,7 @@ class RestaurantListAdapter(val preferences: SharedPreferences) :
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.restaurant_item_view, parent, false)

@@ -1,5 +1,6 @@
 package com.demo.ike.doordashproject
 
+import android.content.SharedPreferences
 import androidx.navigation.NavInflater
 import com.demo.ike.doordashproject.data.Restaurant
 import com.demo.ike.doordashproject.retrofit.RestaurantListService
@@ -26,10 +27,11 @@ class MainActivityPresenterTest {
     private val view: MainActivityView = mock()
     private val restaurantOne: Restaurant = mock()
     private val restaurantTwo: Restaurant = mock()
+    private val SharedPreferences: SharedPreferences = mock()
 
     private fun createPresenter() {
         presenter = MainActivityPresenter(
-            restaurantListService, navInflater
+            SharedPreferences, restaurantListService, navInflater
         )
     }
 
