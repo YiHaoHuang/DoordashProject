@@ -7,7 +7,7 @@ androidExtensions {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.demo.ike.doordashproject"
         minSdkVersion 24
